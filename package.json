@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tarekraafat/autocomplete.js": "^10.2.7",
+    "maska": "^2.1.11",
+    "pinia": "^2.1.7",
+    "tingle.js": "^0.16.0",
     "vue": "^3.4.19"
   },
   "devDependencies": {

@@ -1,40 +1,21 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { useCalcStore } from '@/lib/store'
+import { storeToRefs } from 'pinia'
 
-const tariffTable = {
-    'base': [
-        [1, 2200],
-        [3, 6600],
-        [6, 12000],
-        [12, 21600],
-        [15, 25500],
-        [36, 61200]
-    ],
-    'no_worries': [
-        [1, 3500],
-        [3, 10500],
-        [6, 19800],
-        [12, 36000],
-        [15, 43500],
-        [36, 104400]
-    ]
-}
-const fiscalStorageTable = {
-    'base': [
-        [15, 10500],
-        [36, 15600],
-    ],
-    'no_worries': [
-        [15, 10500],
-        [36, 15600],
-    ]
-}
+const main = useCalcStore();
 
-const cashboxCount = ref(1)
-const useReserve = ref(false)
-const fiscalStorage = ref(15)
-const monthSelected = ref(12)
-const tariff = ref('base')
+const { 
+    cashboxCount, 
+    useReserve, 
+    fiscalStorage, 
+    monthSelected, 
+    tariff,
+    fiscalStoragePrice,
+    totalPrice,
+    totalPriceDiscount,
+    cashboxCountText
+} = storeToRefs(main)
+
 
 function printMonthText(count) {
     let text = 'месяцев'
@@ -46,31 +27,6 @@ function printMonthText(count) {
 
     return count + ' ' + text
 }
-
-const cashboxCountText = computed(() => {
-    let text = 'касс'
-    if (1 == cashboxCount.value) {
-        text = 'касса'
-    } else if (5 > cashboxCount.value) {
-        text = 'кассы'
-    }
-
-    return cashboxCount.value + ' ' + text
-})
-
-const tariffPrice = computed(() => {
-    return tariffTable[tariff.value].filter(row => monthSelected.value == row[0])[0][1]
-})
-const fiscalStoragePrice = computed(() => {
-    return fiscalStorageTable[tariff.value].filter(row => fiscalStorage.value == row[0])[0][1]
-})
-
-const totalPrice = computed(() => {
-    return tariffPrice.value * cashboxCount.value
-})
-const totalPriceDiscount = computed(() => {
-    return (totalPrice.value / 0.8) - totalPrice.value
-})
 </script>
 
 <template>
@@ -228,7 +184,7 @@ const totalPriceDiscount = computed(() => {
                     <p><s>{{ totalPrice + fiscalStoragePrice + totalPriceDiscount }} ₽</s></p>
                     <p>{{ totalPrice + fiscalStoragePrice }} ₽</p>
 
-                    <button class="button button--line">
+                    <button class="button button--line" @click="$emit('complited')">
                         <span class="button__text">Перейти к оплате</span>
                     </button>
                 </div>
