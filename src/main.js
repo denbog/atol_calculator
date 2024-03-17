@@ -4,4 +4,6 @@ import { createPinia } from 'pinia'
 import './style.scss'
 import App from './App.vue'
 
-createApp(App).use(createPinia()).mount('#app')
+const mountEl = document.querySelector('#app')
+
+createApp(App, { ...mountEl.dataset }).use(createPinia()).mount('#app')

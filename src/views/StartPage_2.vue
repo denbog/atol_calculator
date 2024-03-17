@@ -2,11 +2,10 @@
 import { useCalcStore } from '@/lib/store'
 import { storeToRefs } from 'pinia'
 
-const main = useCalcStore();
+const main = useCalcStore()
 
 const { 
-    cashboxCount, 
-    useReserve, 
+    cashboxCount,
     fiscalStorage, 
     monthSelected, 
     tariff,
@@ -50,10 +49,6 @@ function printMonthText(count) {
                     <h3>1. Выберите количество касс</h3>
 
                     <input type="number" min="1" max="100" v-model="cashboxCount">
-
-                    <label>
-                        <input type="checkbox" v-model="useReserve"> Добавить резервные кассы 
-                    </label>
 
                     <h3>2. Выберите фискальный накопитель</h3>
                     <div class="field" v-for="value in [15, 36]">
