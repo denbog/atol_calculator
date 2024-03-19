@@ -6,4 +6,13 @@ import App from './App.vue'
 
 const mountEl = document.querySelector('#app')
 
-createApp(App, { ...mountEl.dataset }).use(createPinia()).mount('#app')
+const app = createApp(App, { ...mountEl.dataset })
+
+app.config.globalProperties.$filters = {
+    formatCurrency(value) {
+        return new Intl.NumberFormat('ru-RU').format(value)
+    }
+}
+
+app.use(createPinia())
+app.mount('#app')
