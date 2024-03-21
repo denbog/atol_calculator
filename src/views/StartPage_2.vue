@@ -2,6 +2,10 @@
 import { useCalcStore } from '@/lib/store'
 import { storeToRefs } from 'pinia'
 
+
+import Cart2 from '@/components/Cart_2.vue'
+import NumberInput from '@/components/NumberInput.vue'
+
 const main = useCalcStore()
 
 const { 
@@ -12,9 +16,10 @@ const {
     fiscalStoragePrice,
     totalPrice,
     totalPriceDiscount,
-    cashboxCountText
+    cashboxCountText,
+    tariffBaseTotalPrice,
+    tariffNoWorriesTotalPrice
 } = storeToRefs(main)
-
 
 function printMonthText(count) {
     let text = 'месяцев'
@@ -48,7 +53,7 @@ function printMonthText(count) {
                 <div class="calc-block calc-block--bordered">
                     <h4>1. Выберите количество касс</h4>
 
-                    <input type="number" min="1" max="100" v-model="cashboxCount">
+                    <NumberInput v-model="cashboxCount" />
 
                     <h4>2. Выберите фискальный накопитель</h4>
 
@@ -80,7 +85,7 @@ function printMonthText(count) {
                             <h3 class="card-tariff__title h3">Базовый</h3>
                             <div class="card-tariff__text"><p>Для опытных пользователей</p></div>
 
-                            <p class="card-tariff__price h3">от 2 190 ₽/мес</p>
+                            <p class="card-tariff__price h3">от {{ $filters.formatCurrency(tariffBaseTotalPrice / monthSelected) }} ₽/мес</p>
 
                             <button 
                                 class="button button--small" 
@@ -102,7 +107,7 @@ function printMonthText(count) {
                             <div class="card-tariff__text">
                                 <p class="tariffs-morelink">Максимальный комфорт</p>
                             </div>
-                            <p class="card-tariff__price h3">от 2 990 ₽/мес</p>
+                            <p class="card-tariff__price h3">от {{ $filters.formatCurrency(tariffNoWorriesTotalPrice / monthSelected) }} ₽/мес</p>
 
                             <button 
                                 class="button button--small" 
@@ -127,58 +132,19 @@ function printMonthText(count) {
 
                     <p><a href="">Посмотрите сравнение тарифов</a></p>
                 </div>
-                <div class="calc-block calc-block--bordered">
-                    <h4>5. Вы выбрали</h4>
 
-                    <div class="calc-block__tariff-title">
-                        <p class="h4">Тариф &laquo;<span v-text="'base' == tariff ? 'Базовый' : 'Без забот'"></span>&raquo;</p>
-                        <div class="calc-block__tariff-badge calc-block__tariff-badge--dark">{{ monthSelected }} мес.</div>
-                        <div class="calc-block__tariff-badge" v-text="cashboxCountText"></div>
-                    </div>
-                    <div class="calc-block__tariff-subtitle" v-if="'base' == tariff">Оптимально по минимальной цене</div>
-                    <div class="calc-block__tariff-subtitle" v-else-if="'no_worries' == tariff">Максимальный комфорт</div>
+                <Cart2>
+                    <template v-slot:header>
+                        <h4>5. Вы выбрали</h4>
+                    </template>
+                    <template v-slot:action>
+                        <button class="button button--small" @click="$emit('complited', 'order')">
+                            <span class="button__text">Перейти к оплате</span>
+                        </button>
+                    </template>
+                </Cart2>
 
-                    <div class="calc-block__price mt-15">
-                        <span><s>{{ $filters.formatCurrency(totalPrice + totalPriceDiscount) }} ₽</s> {{ $filters.formatCurrency(totalPrice) }} ₽</span>
-                    </div>
-
-                    <ul class="card-tariff__list" v-if="'base' == tariff">
-                        <li class="card-tariff__item">Гарантированная отправка чеков вашим покупателям 24/7;</li>
-                        <li class="card-tariff__item">Прозрачность и контроль: онлайн доступ к вашим чекам, мониторинг
-                            кассы через удобный Личный кабинет;</li>
-                        <li class="card-tariff__item">Поддержка маркировки и полное соответствие 54&#8209;ФЗ.</li>
-                    </ul>
-                    <ul class="card-tariff__list" v-else-if="'no_worries' == tariff">
-                        <li class="card-tariff__item">Гарантированная отправка чеков вашим покупателям 24/7;</li>
-                        <li class="card-tariff__item">Прозрачность и контроль: онлайн-доступ к чекам, мониторинг кассы
-                            через удобный личный кабинет;</li>
-                        <li class="card-tariff__item">Поддержка маркировки и полное соответствие 54&#8209;ФЗ;</li>
-                        <li class="card-tariff__item">Регистрация кассы без визита в налоговую;</li>
-                        <li class="card-tariff__item">Поддержка в любое время;</li>
-                        <li class="card-tariff__item">ОФД входит в тариф;</li>
-                        <li class="card-tariff__item">Настройка и регистрация кассы 0 ₽.</li>
-                    </ul>
-
-                    <div class="calc-block__title">
-                        <div>Фискальный накопитель на&nbsp;{{ fiscalStorage }}&nbsp;мес.</div>
-                    </div>
-                    <div class="calc-block__price">
-                        <span>{{ $filters.formatCurrency(fiscalStoragePrice) }} ₽</span>
-                    </div>
-
-                    <div class="calc-block__total calc-block__total--big">
-                        <span>Итого</span>
-                        <div class="calc-block__total__discount">С учётом скидки -{{ $filters.formatCurrency(totalPriceDiscount) }} ₽</div>
-                        <div class="calc-block__total__old-value"><s>{{ $filters.formatCurrency(totalPrice + fiscalStoragePrice + totalPriceDiscount) }} ₽</s></div>
-                        <div class="calc-block__total__value">{{ $filters.formatCurrency(totalPrice + fiscalStoragePrice) }} ₽</div>
-                    </div>
-
-                    <button class="button button--small" @click="$emit('complited')">
-                        <span class="button__text">Перейти к оплате</span>
-                    </button>
-                </div>
             </div>
-
         </div>
     </div>
 </template>

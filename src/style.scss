@@ -1,5 +1,20 @@
 @import '../node_modules/tingle.js/src/tingle';
 
+.tingle-confirm {
+    background: rgba(0, 0, 0, 0.7);
+
+    .tingle-modal-box {
+        border-radius: 24px;
+        max-width: 385px;
+
+        &__content {
+            padding: 32px 32px 49px;
+            text-align: center;
+        }
+    }
+}
+
+
 .autoComplete_wrapper {
     position: relative;
 }
@@ -14,8 +29,8 @@
     padding: 0;
     z-index: 1;
     list-style: none;
-    background-color: #000;
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid #B2B3BD;
     outline: none;
     transition: opacity 0.15s ease-in-out;
     -moz-transition: opacity 0.15s ease-in-out;
@@ -30,7 +45,7 @@
 }
 
 .autoComplete_wrapper>ul>li {
-    margin: 0.3rem;
+    margin: 0;
     padding: 0.3rem 0.5rem;
     text-align: left;
     background-color: #fff;
@@ -42,13 +57,13 @@
 
 .autoComplete_wrapper>ul>li mark {
     background-color: transparent;
-    color: rgba(255, 122, 122, 1);
-    font-weight: bold;
+    color: #df192c;
+    font-weight: 600;
 }
 
 .autoComplete_wrapper>ul>li:hover {
     cursor: pointer;
-    background-color: rgba(255, 122, 122, .05);
+    background-color: rgba(178, 179, 189, 0.35);
 }
 
 .autoComplete_wrapper>ul>li[aria-selected="true"] {
@@ -69,6 +84,16 @@
 }
 
 .calc {
+    --clr-red: #df192c;
+    --clr-dark: #17181c;
+    --clr-white: #fff;
+    --clr-light: #B2B3BD;
+    --clr-light-2: #f7f7f7;
+    --clr-light-3: #E4E4E4;
+
+    --clr-input: #fff;
+
+    
     font-family: TT Firs Neue, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 
     h3 {
@@ -86,6 +111,128 @@
 
         &:not(:last-child) {
             margin-bottom: 5px;
+        }
+    }
+
+    .grid-action {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 380px 1fr;
+        gap: 50px;
+    }
+}
+
+.btn {
+    --btn-clr-bg: var(--clr-red);
+    --btn-clr-bg-hover: var(--clr-dark);
+    --btn-clr-border: var(--btn-clr-bg);
+    --btn-clr-text: var(--clr-white);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+
+    height: 40px;
+    padding: 0 40px;
+
+    background-color: var(--btn-clr-bg);
+    border: 1px solid var(--btn-clr-border);
+    border-radius: 16px;
+    color: var(--btn-clr-text);
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.5s;
+
+    &:hover:not(:disabled) {
+        background-color: var(--btn-clr-bg-hover);
+    }
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+
+    &--dark {
+        --btn-clr-bg: #17181c;
+        --btn-clr-bg-hover: #df192c;
+    }
+
+    &--pay {
+        --btn-clr-bg: #fff;
+        --btn-clr-bg-hover: #fff;
+        --btn-clr-text: var(--clr-dark);
+        --btn-clr-border: var(--clr-dark);
+
+        &::after {
+            content: '';
+            background: url(atol-pay.png) no-repeat;
+            background-size: contain;
+
+            height: 16px;
+            width: 87px;
+        }
+    }
+
+    &--link {
+        --btn-clr-bg: transparent;
+        --btn-clr-bg-hover: transparent;
+        --btn-clr-text: #17181c;
+
+        font-weight: 400;
+        height: auto;
+        padding: 0;
+    }
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.input-field {
+    font-size: 14px;
+
+
+    &__action {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 380px 1fr;
+        gap: 50px;
+    }
+
+    label {
+        color: var(--clr-light);
+        display: block;
+    }
+
+    input {
+        background-color: var(--clr-input);
+        border: 1px solid var(--clr-input);
+        border-radius: 8px;
+        line-height: 1;
+        padding: 17px 26px;
+        width: 100%;
+
+        &::placeholder {
+            color: var(--clr-light);
+        }
+
+        &:focus {
+            outline: none;
+            border-color: var(--clr-light-2);
+        }
+        &:disabled {
+            color: var(--clr-light);
+        }
+    }
+
+    &--center {
+        input {
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
         }
     }
 }
@@ -247,6 +394,13 @@
             font-size: 27px;
             font-weight: 600;
         }
+    }
+
+    &__footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
     }
     
     h4 {

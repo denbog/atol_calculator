@@ -90,29 +90,40 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div v-if="contacts.inn">
-        <div>
+    <div class="org-input-group mt-40" v-if="contacts.inn">
+        <div class="input-field">
             <label>Введите ИНН</label>
             <input type="text" v-model="contacts.inn" />
         </div>
-        <div>
+        <div class="input-field">
             <label>Введите КПП</label>
             <input type="text" v-model="contacts.kpp" />
         </div>
-        <div>
+        <div class="input-field">
             <label>Организация</label>
             <input type="text" v-model="contacts.name" />
         </div>
-        <div>
+        <div class="input-field">
             <label>Адрес организации</label>
             <input type="text" v-model="contacts.address" />
         </div>
-        <div>
+        <div class="input-field">
             <label>E-mail</label>
             <input type="text" v-model="contacts.email" />
         </div>
     </div>
-    <div v-else>
-        <input type="text" ref="search" autocomplete="off" />
+    <div class="mt-40" v-else>
+        <div class="input-field">
+            <label>Начните вводить ИНН или наименование</label>
+            <input type="text" ref="search" autocomplete="off" placeholder="Организация" />
+        </div>
     </div>
 </template>
+
+<style scoped lang="scss">
+    .org-input-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+</style>

@@ -1,8 +1,10 @@
 <script setup>
+import { useSlots } from 'vue'
 import { useCalcStore } from '@/lib/store'
 import { storeToRefs } from 'pinia'
 
-const main = useCalcStore();
+const main = useCalcStore()
+const slots = useSlots()
 
 const { 
     fiscalStorage, 
@@ -65,9 +67,14 @@ const {
             <span>{{ $filters.formatCurrency(fiscalStoragePrice) }} ₽</span>
         </div>
 
-        <div class="calc-block__total">
-            <span>Итого</span>
-            <div class="calc-block__total__value">{{ $filters.formatCurrency(totalPrice + fiscalStoragePrice) }} ₽</div>
+        <div class="calc-block__footer">
+            <div class="calc-block__total">
+                <span>Итого</span>
+                <div class="calc-block__total__value">{{ $filters.formatCurrency(totalPrice + fiscalStoragePrice) }} ₽</div>
+            </div>
+            <div class="calc-block__action" v-if="slots.action">
+                <slot name="action"></slot>
+            </div>
         </div>
     </div>
 </template>

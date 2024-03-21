@@ -106,12 +106,6 @@ function selectMonth(value) {
                 <button class="calc-block__btn calc-block__btn--rounded calc-block__btn--dark" v-else @click.prevent="tariff = 'base'">Убрать</button>
             </div>
         </div>
-
-
-
-        <button class="button button--line" @click="$emit('complited')">
-            <span class="button__text">Далее</span>
-        </button>
     </template>
 </template>
 
