@@ -85,7 +85,7 @@ function printMonthText(count) {
                             <h3 class="card-tariff__title h3">Базовый</h3>
                             <div class="card-tariff__text"><p>Для опытных пользователей</p></div>
 
-                            <p class="card-tariff__price h3">от {{ $filters.formatCurrency(tariffBaseTotalPrice / monthSelected) }} ₽/мес</p>
+                            <p class="card-tariff__price h3">{{ $filters.formatCurrency(tariffBaseTotalPrice / monthSelected) }} ₽/мес</p>
 
                             <button 
                                 class="button button--small" 
@@ -107,7 +107,7 @@ function printMonthText(count) {
                             <div class="card-tariff__text">
                                 <p class="tariffs-morelink">Максимальный комфорт</p>
                             </div>
-                            <p class="card-tariff__price h3">от {{ $filters.formatCurrency(tariffNoWorriesTotalPrice / monthSelected) }} ₽/мес</p>
+                            <p class="card-tariff__price h3">{{ $filters.formatCurrency(tariffNoWorriesTotalPrice / monthSelected) }} ₽/мес</p>
 
                             <button 
                                 class="button button--small" 

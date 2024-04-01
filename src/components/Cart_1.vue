@@ -7,10 +7,11 @@ const main = useCalcStore()
 const slots = useSlots()
 
 const { 
+    cashboxCount,
     fiscalStorage, 
     monthSelected, 
     tariff,
-    fiscalStoragePrice,
+    fiscalStorageTotalPrice,
     totalPrice,
     tariffBaseTotalPrice,
     tariffNoWorriesTotalPrice,
@@ -23,11 +24,11 @@ const {
     <div class="calc-block" v-if="monthSelected">
         <div class="calc-block__title">
             <div>Базовый тариф</div>
-            <div v-text="cashboxCountText"></div>
+            <div v-html="cashboxCountText"></div>
         </div>
             
         <div class="calc-block__price">
-            <span>{{ $filters.formatCurrency(tariffBaseTotalPrice) }} ₽</span>
+            <span>{{ $filters.formatCurrency(tariffBaseTotalPrice * cashboxCount) }} ₽</span>
         </div>
 
         <ul class="card-tariff__list">
@@ -40,11 +41,11 @@ const {
         <template v-if="'no_worries' == tariff">
             <div class="calc-block__title">
                 <div>Без забот</div>
-                <div v-text="cashboxCountText"></div>
+                <div v-html="cashboxCountText"></div>
             </div>
             
             <div class="calc-block__price">
-                <span>{{ $filters.formatCurrency(tariffNoWorriesTotalPrice - tariffBaseTotalPrice) }} ₽</span>
+                <span>{{ $filters.formatCurrency((tariffNoWorriesTotalPrice - tariffBaseTotalPrice) * cashboxCount) }} ₽</span>
             </div>
 
             <ul class="card-tariff__list" >
@@ -60,17 +61,18 @@ const {
         </template>
 
         <div class="calc-block__title">
-            <div>Фискальный накопитель на {{ fiscalStorage }} месяцев</div>
+            <div>Фискальный накопитель на&nbsp;{{ fiscalStorage }} месяцев</div>
+            <div>{{ cashboxCount }}&nbsp;ФН</div>
         </div>
 
         <div class="calc-block__price">
-            <span>{{ $filters.formatCurrency(fiscalStoragePrice) }} ₽</span>
+            <span>{{ $filters.formatCurrency(fiscalStorageTotalPrice) }} ₽</span>
         </div>
 
         <div class="calc-block__footer">
             <div class="calc-block__total">
                 <span>Итого</span>
-                <div class="calc-block__total__value">{{ $filters.formatCurrency(totalPrice + fiscalStoragePrice) }} ₽</div>
+                <div class="calc-block__total__value">{{ $filters.formatCurrency(totalPrice + fiscalStorageTotalPrice) }} ₽</div>
             </div>
             <div class="calc-block__action" v-if="slots.action">
                 <slot name="action"></slot>

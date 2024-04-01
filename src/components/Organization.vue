@@ -6,7 +6,7 @@ const DaDataSuggest = async (query) => {
 
     const type = query.match(/^[0-9]+/i) ? 'findById' : 'suggest'
 
-    const resp = await fetch('http://suggestions.dadata.ru/suggestions/api/4_1/rs/'+type+'/party', {
+    const resp = await fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/'+type+'/party', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',

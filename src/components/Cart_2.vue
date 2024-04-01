@@ -25,10 +25,10 @@ const {
         <slot name="header"></slot>
 
         <div class="calc-block__tariff-title">
-            <p class="h4">Тариф &laquo;<span v-text="'base' == tariff ? 'Базовый' : 'Без забот'"></span>&raquo;</p>
             <div class="calc-block__tariff-badge calc-block__tariff-badge--dark">{{ monthSelected }} мес.</div>
             <div class="calc-block__tariff-badge" v-text="cashboxCountText"></div>
         </div>
+        <p class="h4 mt-15">Тариф &laquo;<span v-text="'base' == tariff ? 'Базовый' : 'Без забот'"></span>&raquo;</p>
         <div class="calc-block__tariff-subtitle" v-if="'base' == tariff">Оптимально по минимальной цене</div>
         <div class="calc-block__tariff-subtitle" v-else-if="'no_worries' == tariff">Максимальный комфорт</div>
 

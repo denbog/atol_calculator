@@ -64,7 +64,7 @@ function selectMonth(value) {
     </div>
 
     <template v-if="monthSelected">
-        <div class="calc-price-block mt-64">
+        <div class="calc-price-block mt-24">
             <p>Для каждой онлайн кассы Вы должны купить фискальный накопитель на <a href="#"
                     @click.prevent="fiscalStorage = 15" :class="{ active: 15 == fiscalStorage }">15</a> или <a href="#"
                     @click.prevent="fiscalStorage = 36" :class="{ active: 36 == fiscalStorage }">36</a> месяцев</p>
@@ -74,7 +74,7 @@ function selectMonth(value) {
             </div>
         </div>
 
-        <div class="calc-price-block">
+        <div class="calc-price-block mt-24">
             <p>Стоимость одной онлайн-кассы</p>
             <div class="calc-price-block__total" v-if="12 == monthSelected">
                 <p class="calc-price-block__discount"><s>{{ $filters.formatCurrency(tariffBaseTotalPrice * 1.18) }}</s> <span>-18%</span></p>
@@ -146,10 +146,6 @@ function selectMonth(value) {
 .calc-price-block {
     display: grid;
     grid-template-columns: 1fr 280px;
-
-    & + & {
-        margin-top: 50px;
-    }
 
     & > p {
         font-weight: 600;

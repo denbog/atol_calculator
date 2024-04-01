@@ -45,6 +45,7 @@ export const useCalcStore = defineStore("main", {
         tariffBaseTotalPrice: (state) => tariffTable['base'].filter(row => state.monthSelected == row[0])[0][1],
         tariffNoWorriesTotalPrice: (state) => tariffTable['no_worries'].filter(row => state.monthSelected == row[0])[0][1],
         fiscalStoragePrice: (state) => fiscalStorageTable[state.tariff].filter(row => state.fiscalStorage == row[0])[0][1],
+        fiscalStorageTotalPrice: (state) => state.fiscalStoragePrice * state.cashboxCount,
         totalPrice: (state) => state.tariffPrice * state.cashboxCount,
         totalPriceDiscount: (state) => (state.totalPrice / 0.8) - state.totalPrice,
         cashboxCountText: (state) => {
@@ -55,7 +56,7 @@ export const useCalcStore = defineStore("main", {
                 text = 'кассы'
             }
 
-            return state.cashboxCount + ' ' + text
+            return state.cashboxCount + '&nbsp;' + text
         },
         tariffName: (state) => {
             if ('base' == state.tariff) {
